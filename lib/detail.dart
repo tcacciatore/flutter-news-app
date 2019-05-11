@@ -10,10 +10,18 @@ class DetailWidget extends StatelessWidget {
 
   DetailWidget(this.article);
 
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(title: 'detail',
-      home: Scaffold(appBar: AppBar(title: Text('Detail')),
+      home: Scaffold(appBar: AppBar(
+          leading: IconButton(icon: Icon(
+              Icons.arrow_back,
+          color: Colors.white,),
+              onPressed: () {
+                Navigator.pop(context);
+              }),
+          title: Text('Detail')),
       body: Container(padding: EdgeInsets.all(16),
         child: Column(
           children: <Widget>[
