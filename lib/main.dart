@@ -3,13 +3,15 @@ import './model/Article.dart';
 import './views/ArticleCell.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:date_format/date_format.dart';
 import 'detail.dart';
 
+/// Entry point for the app.
+///
+/// Provide the widget here.
 void main() => runApp(NewsAppWidget());
 
 
-
+/// Main widget
 class NewsAppWidget extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -27,6 +29,13 @@ class NewsAppState extends State<NewsAppWidget> {
   bool _isLoading = true;
   var _articles = [];
   String _lastRefresh;
+
+  @override
+  initState() {
+    super.initState();
+
+    _fetchArticles();
+  }
 
   _fetchArticles() async {
 
@@ -54,7 +63,7 @@ class NewsAppState extends State<NewsAppWidget> {
       });
     } else {
       // If that response was not OK, throw an error.
-      throw Exception('Failed to load post');
+      throw Exception('Failed to load article');
     }
 
     setState(() {
@@ -70,12 +79,17 @@ class NewsAppState extends State<NewsAppWidget> {
             itemCount: this._articles != null ? this._articles.length : 0,
             itemBuilder: (context, pos) {
               final currentArticle = this._articles[pos];
-              return FlatButton(child: ArticleCell(currentArticle),
-                onPressed: () {
-                  print("User selected the row at index $pos");
-                  Navigator.push(context, MaterialPageRoute(
-                      builder: (context) => DetailWidget(currentArticle)));
-              },);
+
+              return Card(elevation: 2,
+                margin: EdgeInsets.all(16),
+                child: FlatButton(child: ArticleCell(currentArticle),
+                  padding: EdgeInsets.all(0),
+                  onPressed: () {
+                    print("User selected the row at index $pos");
+                    Navigator.push(context, MaterialPageRoute(
+                        builder: (context) => DetailWidget(currentArticle)));
+                  },),
+              );
             },
           );
 
