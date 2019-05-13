@@ -10,7 +10,6 @@ import 'detail.dart';
 /// Provide the widget here.
 void main() => runApp(NewsAppWidget());
 
-
 /// Main widget
 class NewsAppWidget extends StatefulWidget {
   @override
@@ -20,39 +19,42 @@ class NewsAppWidget extends StatefulWidget {
 }
 
 class NewsAppState extends State<NewsAppWidget> {
-  // Declare the api key for https://newsapi.org.
+  /// Declare the api key for https://newsapi.org.
   static const API_KEY = "cbf0a7963df34c15a6c6ea38ba5da326";
   static const API_URL = "https://newsapi.org/v2";
   static const API_TOP_HEADLINE_URL = "top-headlines";
 
-  // States.
+  /// Widget States.
   bool _isLoading = true;
   var _articles = [];
-  String _lastRefresh;
 
   @override
   initState() {
     super.initState();
 
+    /// Retrieve articles when the widget is starting.
     _fetchArticles();
   }
 
+  /// Fetch articles from a rest API.
   _fetchArticles() async {
-
-    //Refresh
+    /// Refresh widget states.
     setState(() {
       _isLoading = true;
       this._articles = [];
     });
 
     var articles = [];
+
+    /// Build the API url.
     final url = '$API_URL/$API_TOP_HEADLINE_URL?country=fr&apiKey=$API_KEY';
     print("requesting to $url");
 
+    /// Get the response from get request.
     final response = await http.get(url);
 
     if (response.statusCode == 200) {
-      // If server returns an OK response, parse the JSON
+      // SUCCESS !
       print(response.body);
       final responseMap = json.decode(response.body);
       final articlesJson = responseMap["articles"];
@@ -63,37 +65,46 @@ class NewsAppState extends State<NewsAppWidget> {
       });
     } else {
       // If that response was not OK, throw an error.
-      throw Exception('Failed to load article');
+      throw Exception('Failed to load articles');
     }
 
+    /// Update states.
     setState(() {
       _isLoading = false;
       this._articles = articles;
     });
   }
 
+  /// Returns the list widget displaying articles.
   Widget _buildListViewArticle() {
-
     return
-          ListView.builder(
-            itemCount: this._articles != null ? this._articles.length : 0,
-            itemBuilder: (context, pos) {
-              final currentArticle = this._articles[pos];
 
-              return Card(elevation: 2,
-                margin: EdgeInsets.all(16),
-                child: FlatButton(child: ArticleCell(currentArticle),
-                  padding: EdgeInsets.all(0),
-                  onPressed: () {
-                    print("User selected the row at index $pos");
-                    Navigator.push(context, MaterialPageRoute(
-                        builder: (context) => DetailWidget(currentArticle)));
-                  },),
-              );
+        /// This listview is bound to _articles state.
+        ListView.builder(
+      itemCount: this._articles != null ? this._articles.length : 0,
+      itemBuilder: (context, pos) {
+        final currentArticle = this._articles[pos];
+
+        return Card(
+          elevation: 2,
+          margin: EdgeInsets.all(16),
+          child: FlatButton(
+            child: ArticleCell(currentArticle),
+            padding: EdgeInsets.all(0),
+
+            /// If the user is selecting a cell,
+            /// push a new widget.
+            onPressed: () {
+              print("User selected the row at index $pos");
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => DetailWidget(currentArticle)));
             },
-          );
-
-
+          ),
+        );
+      },
+    );
   }
 
   @override
@@ -113,6 +124,9 @@ class NewsAppState extends State<NewsAppWidget> {
             )
           ],
         ),
+
+        /// Display the articles list
+        /// or a circular progress indicator if loading
         body: Center(
           child: _isLoading
               ? CircularProgressIndicator()

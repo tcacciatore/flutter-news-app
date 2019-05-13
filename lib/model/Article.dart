@@ -1,4 +1,6 @@
 class Article {
+
+  /// Properties.
   String author;
   String title;
   String description;
@@ -8,6 +10,7 @@ class Article {
   String content;
 
 
+  /// Constructor.
   Article({
     this.author,
     this.title,
@@ -17,6 +20,7 @@ class Article {
     this.publishedAt,
     this.content});
 
+  /// Build the Article object from JSON response.
   factory Article.fromJson(Map<String, dynamic> json) {
     return Article(
       author: json['author'],
