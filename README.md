@@ -1,16 +1,20 @@
-# flutter_news_app
+# flutter_news_app  
+  
+A Flutter app displaying news retrieved from an API (https://newsapi.org)
+  
+<img src="images/demo.gif" alt="drawing" width="300"/>
+  
+## How to use it.
 
-A new Flutter application.
+ 1. Go to https://newsapi.org and get a key.
+ 2. Open the project.
+ 3. Go to `main.dart`.
+ 4. Change the value of `API_KEY` variable and put your own.
 
-## Getting Started
+The project is ready to be executed.
 
-This project is a starting point for a Flutter application.
+## Architecture
 
-A few resources to get you started if this is your first Flutter project:
+<img src="images/main.JPG" alt="drawing" width="300"/>
 
-- [Lab: Write your first Flutter app](https://flutter.io/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.io/docs/cookbook)
-
-For help getting started with Flutter, view our 
-[online documentation](https://flutter.io/docs), which offers tutorials, 
-samples, guidance on mobile development, and a full API reference.
+<img src="images/detail.JPG" alt="drawing" width="300"/>
