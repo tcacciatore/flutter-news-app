@@ -20,7 +20,7 @@ class NewsAppWidget extends StatefulWidget {
 
 class NewsAppState extends State<NewsAppWidget> {
   /// Declare the api key for https://newsapi.org.
-  static const API_KEY = "cbf0a7963df34c15a6c6ea38ba5da326";
+  static const API_KEY = "<YOUR API HERE>";
   static const API_URL = "https://newsapi.org/v2";
   static const API_TOP_HEADLINE_URL = "top-headlines";
 
